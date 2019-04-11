@@ -28,5 +28,17 @@ services:
       MYSQL_ROOT_PASSWORD: prisma
     volumes:
       - mysql:/var/lib/mysql
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "4000:4000"
+    volumes:
+      - .:/app
+    depends_on:
+      - prisma
+    environment:
+      ENDPOINT: http://prisma:4466
 volumes:
   mysql:

@@ -18,7 +18,15 @@ func main() {
 		port = defaultPort
 	}
 
-	client := prisma.New(nil)
+	var opt *prisma.Options
+	endpoint := os.Getenv("ENDPOINT")
+	if len(endpoint) != 0 {
+		opt = &prisma.Options{
+			Endpoint: endpoint,
+		}
+	}
+
+	client := prisma.New(opt)
 	resolver := gqlgen.Resolver{
 		Prisma: client,
 	}
